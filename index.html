@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090d18">
+<title>AMAI AI Studio</title>
+<style>
+:root{--bg:#080c16;--panel:#101827;--panel2:#151f31;--line:#26334a;--text:#edf3ff;--muted:#91a0b9;--accent:#7c6cff;--accent2:#27d6c5;--danger:#ff6b83}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#1b2050 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+button,textarea,input,select{font:inherit}button{cursor:pointer}
+.app{max-width:1440px;margin:auto;min-height:100vh;display:grid;grid-template-columns:250px 1fr}
+.sidebar{border-right:1px solid var(--line);background:rgba(10,15,27,.88);padding:22px 16px;display:flex;flex-direction:column;gap:22px}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--accent),#25c8ce);display:grid;place-items:center;font-weight:900;font-size:20px;box-shadow:0 8px 30px #695bff55}.brand strong{display:block;letter-spacing:.08em}.brand small{color:var(--muted);font-size:10px;letter-spacing:.16em}
+.navlabel{color:#6f7e99;font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin:0 10px 8px}.nav{display:grid;gap:6px}.nav button{border:1px solid transparent;background:transparent;color:#aebbd0;text-align:left;padding:11px 12px;border-radius:12px;display:flex;gap:11px;align-items:center}.nav button.active,.nav button:hover{background:#1b2540;border-color:#354366;color:white}.nav .ico{width:20px;text-align:center;color:#a69cff}
+.sidebar-foot{margin-top:auto;border:1px solid var(--line);background:#111a2a;border-radius:14px;padding:13px;color:var(--muted);font-size:12px}
+.main{min-width:0;padding:24px clamp(16px,4vw,48px) 40px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:30px}.eyebrow{font-size:11px;color:#a99fff;letter-spacing:.2em;text-transform:uppercase}.topbar h1{font-size:clamp(24px,4vw,34px);margin:4px 0 0;letter-spacing:-.04em}.top-actions{display:flex;gap:8px;align-items:center}.pill{border:1px solid var(--line);background:#111a2b;color:#b9c6db;border-radius:99px;padding:8px 12px;font-size:12px}
+.hero{border:1px solid #3c3b77;background:linear-gradient(115deg,#201d4d,#142a3a 75%,#113b42);border-radius:22px;padding:clamp(20px,4vw,34px);position:relative;overflow:hidden;margin-bottom:22px}.hero:after{content:"✦";position:absolute;right:8%;top:-45px;font-size:190px;color:#ffffff0b}.hero h2{font-size:clamp(25px,4vw,40px);line-height:1.12;max-width:650px;margin:0 0 12px;letter-spacing:-.04em}.hero p{color:#c1c9e2;max-width:600px;margin:0 0 20px}.gradient{background:linear-gradient(90deg,#b3a7ff,#65e8df);background-clip:text;color:transparent}.btn{border:0;border-radius:11px;padding:11px 16px;background:linear-gradient(100deg,var(--accent),#5b8cff);color:white;font-weight:700}.btn.secondary{background:#202c43;border:1px solid #35435e;color:#dce6f8}.btn:disabled{opacity:.55;cursor:wait}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-bottom:24px}.card{border:1px solid var(--line);background:linear-gradient(150deg,#141e30,#0e1625);border-radius:17px;padding:17px;min-width:0}.card .symbol{font-size:21px;margin-bottom:10px}.card h3{margin:0 0 4px;font-size:15px}.card p{margin:0;color:var(--muted);font-size:12px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:26px 0 12px}.section-head h2{font-size:18px;margin:0}.workarea{border:1px solid var(--line);background:#0e1625;border-radius:18px;padding:18px}.workarea textarea,.workarea input,.workarea select{width:100%;background:#080f1d;border:1px solid #2a3851;color:var(--text);border-radius:12px;padding:13px;outline:none}.workarea textarea:focus,.workarea input:focus,.workarea select:focus{border-color:#8174ff;box-shadow:0 0 0 3px #8174ff22}.workarea textarea{min-height:120px;resize:vertical}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.row .btn{flex:0 0 auto}.output{white-space:pre-wrap;overflow-wrap:anywhere;background:#090f1c;border:1px solid #26334a;border-radius:12px;padding:15px;min-height:90px;color:#dce7fa;margin-top:14px}.output:empty{display:none}.hint{font-size:12px;color:var(--muted);margin:8px 0 0}.status{font-size:12px;color:var(--accent2);min-height:20px;margin-top:8px}.chatlog{display:grid;gap:12px;max-height:440px;overflow:auto;margin:12px 0}.bubble{padding:12px 14px;border-radius:14px;max-width:92%;white-space:pre-wrap;overflow-wrap:anywhere}.bubble.user{background:#28245b;border:1px solid #514b9b;margin-left:auto}.bubble.ai{background:#151f31;border:1px solid #2b3a54}.image-result{max-width:100%;border-radius:14px;margin-top:12px;border:1px solid var(--line)}.hidden{display:none!important}.mobile-menu{display:none}.footer{color:#64748b;text-align:center;font-size:11px;margin-top:30px}
+@media(max-width:850px){.app{grid-template-columns:1fr}.sidebar{position:fixed;z-index:10;inset:0 auto 0 0;width:270px;transform:translateX(-105%);transition:.2s;box-shadow:20px 0 50px #0008}.sidebar.open{transform:translateX(0)}.mobile-menu{display:inline-flex}.main{padding:17px 14px 30px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.topbar{margin-bottom:20px}.top-actions .pill{display:none}}
+@media(max-width:480px){.cards{grid-template-columns:1fr 1fr;gap:9px}.card{padding:13px}.hero{border-radius:17px}.row.stack-mobile{display:grid}.row.stack-mobile .btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+ <div class="brand"><div class="logo">A</div><div><strong>AMAI STUDIO</strong><small>INTELLIGENCE, UNIFIED</small></div></div>
+ <div><p class="navlabel">Workspace</p><nav class="nav">
+  <button class="active" data-view="home"><span class="ico">⌂</span> Overview</button>
+  <button data-view="chat"><span class="ico">✧</span> AI Chat</button>
+  <button data-view="image"><span class="ico">▧</span> Image Studio</button>
+  <button data-view="writer"><span class="ico">✎</span> AI Writer</button>
+  <button data-view="code"><span class="ico">{ }</span> Code Assistant</button>
+  <button data-view="vision"><span class="ico">◉</span> Image Analyzer</button>
+  <button data-view="prompts"><span class="ico">▤</span> Prompt Library</button>
+ </nav></div>
+ <div><p class="navlabel">Manage</p><nav class="nav">
+  <button data-view="history"><span class="ico">◷</span> Local History</button>
+  <button data-view="settings"><span class="ico">⚙</span> Settings</button>
+ </nav></div>
+ <div class="sidebar-foot"><b style="color:#dce6f8">Puter.js engine</b><br>AI requests are powered by Puter. Sign in when prompted. Usage and any charges are subject to Puter's current user terms.</div>
+</aside>
+<main class="main">
+ <header class="topbar"><div class="row" style="flex:1;gap:12px"><button class="btn secondary mobile-menu" id="menuBtn">☰</button><div><div class="eyebrow">AMUDHAN • CREATIVE AI WORKSPACE</div><h1 id="pageTitle">Your AI command center</h1></div></div><div class="top-actions"><span class="pill" id="engineState">● Puter.js ready to connect</span><button class="btn secondary" id="newChatTop">＋ New chat</button></div></header>
+ <section id="view-home">
+  <div class="hero"><div class="eyebrow">ONE WORKSPACE. MANY POSSIBILITIES.</div><h2>Create faster with <span class="gradient">AMAI AI Studio</span></h2><p>Chat, write, code, explore image ideas and analyze visuals in one responsive workspace powered by Puter.js.</p><button class="btn" data-go="chat">Start creating&nbsp; →</button></div>
+  <div class="cards">
+   <article class="card"><div class="symbol">✧</div><h3>AI Chat</h3><p>Ask questions and brainstorm ideas.</p></article>
+   <article class="card"><div class="symbol">▧</div><h3>Image Studio</h3><p>Turn prompts into visual concepts.</p></article>
+   <article class="card"><div class="symbol">✎</div><h3>AI Writer</h3><p>Draft posts, emails and articles.</p></article>
+   <article class="card"><div class="symbol">{ }</div><h3>Code Assistant</h3><p>Explain, create and debug code.</p></article>
+   <article class="card"><div class="symbol">◉</div><h3>Image Analyzer</h3><p>Ask questions about an image.</p></article>
+   <article class="card"><div class="symbol">▤</div><h3>Prompt Library</h3><p>Start with reusable prompt ideas.</p></article>
+  </div>
+  <div class="section-head"><h2>Quick start</h2><span class="hint">Choose a workspace</span></div>
+  <div class="row stack-mobile"><button class="btn secondary" data-go="chat">✧ Chat with AI</button><button class="btn secondary" data-go="image">▧ Generate an image</button><button class="btn secondary" data-go="writer">✎ Write content</button></div>
+ </section>
+ <section id="view-chat" class="hidden">
+  <div class="section-head"><h2>AI Chat</h2><button class="btn secondary" id="clearChat">Clear chat</button></div>
+  <div class="workarea"><div class="row"><select id="chatModel" aria-label="AI model"><option value="gpt-5.4-nano">GPT-5.4 Nano (default)</option><option value="gpt-5.5">GPT-5.5</option><option value="gpt-6-luna">GPT-6 Luna</option></select><span class="hint">Model availability may change.</span></div><div class="chatlog" id="chatLog"><div class="bubble ai">Welcome to AMAI. What would you like to create today?</div></div><textarea id="chatInput" placeholder="Message AMAI..."></textarea><div class="row" style="margin-top:10px"><span class="hint">AI responses may be inaccurate. Verify important information.</span><button class="btn" id="sendChat">Send ↗</button></div><div class="status" id="chatStatus"></div></div>
+ </section>
+ <section id="view-image" class="hidden">
+  <div class="section-head"><h2>Image Studio</h2></div><div class="workarea"><textarea id="imagePrompt" placeholder="Describe the image you want... e.g. cinematic futuristic Tamil Nadu temple at golden hour, intricate architecture"></textarea><div class="row" style="margin-top:10px"><select id="imageModel"><option value="">Default image model</option><option value="gpt-image-2.6-flare">GPT Image 2.6 Flare</option><option value="gemini-3.1-flash-image">Gemini 3.1 Flash Image</option><option value="gemini-3-pro-image">Gemini 3 Pro Image</option></select><button class="btn" id="makeImage">Generate image</button></div><div class="status" id="imageStatus"></div><div id="imageOutput"></div></div>
+ </section>
+ <section id="view-writer" class="hidden">
+  <div class="section-head"><h2>AI Writer</h2></div><div class="workarea"><div class="row"><select id="writerType"><option>Social media post</option><option>Instagram caption</option><option>YouTube script</option><option>Blog article</option><option>Professional email</option><option>Product description</option><option>Tamil content</option></select><select id="writerTone"><option>Engaging</option><option>Professional</option><option>Friendly</option><option>Persuasive</option><option>Simple and clear</option></select></div><textarea id="writerPrompt" placeholder="What should the AI write about? Include audience, key points and preferred language."></textarea><button class="btn" id="writeBtn" style="margin-top:10px">Create content</button><div class="status" id="writerStatus"></div><div class="output" id="writerOutput"></div><button class="btn secondary hidden" id="copyWriter" style="margin-top:9px">Copy result</button></div>
+ </section>
+ <section id="view-code" class="hidden">
+  <div class="section-head"><h2>Code Assistant</h2></div><div class="workarea"><select id="codeTask"><option>Create code</option><option>Explain code</option><option>Debug code</option><option>Improve code</option></select><textarea id="codePrompt" placeholder="Describe the code you need, or paste your code and explain the issue."></textarea><button class="btn" id="codeBtn" style="margin-top:10px">Run code assistant</button><div class="status" id="codeStatus"></div><div class="output" id="codeOutput"></div><button class="btn secondary hidden" id="copyCode" style="margin-top:9px">Copy result</button></div>
+ </section>
+ <section id="view-vision" class="hidden">
+  <div class="section-head"><h2>Image Analyzer</h2></div><div class="workarea"><p class="hint">Choose an image from your phone, then ask a question about it.</p><input type="file" id="visionFile" accept="image/*" style="margin:12px 0"><textarea id="visionPrompt" placeholder="What would you like to know about this image?"></textarea><button class="btn" id="visionBtn" style="margin-top:10px">Analyze image</button><div class="status" id="visionStatus"></div><div class="output" id="visionOutput"></div></div>
+ </section>
+ <section id="view-prompts" class="hidden">
+  <div class="section-head"><h2>Prompt Library</h2><span class="hint">Tap a prompt to use it</span></div><div class="cards" id="promptCards"></div>
+ </section>
+ <section id="view-history" class="hidden">
+  <div class="section-head"><h2>Local History</h2><button class="btn secondary" id="clearHistory">Delete history</button></div><div class="workarea"><div id="historyList" class="hint">Your saved local activity will appear here.</div></div>
+ </section>
+ <section id="view-settings" class="hidden">
+  <div class="section-head"><h2>Settings</h2></div><div class="workarea"><h3>About AMAI</h3><p class="hint">AMAI AI Studio is a browser-based starter application. It uses the official Puter.js browser SDK.</p><p class="hint">Puter sign-in and AI usage are handled by Puter. Review Puter's current terms, model availability and usage costs before using paid models.</p><h3 style="margin-top:22px">Data and privacy</h3><p class="hint">Chat activity is stored in this browser's local storage on this device. Clearing browser data may remove it. Do not enter passwords, payment details or confidential information into prompts.</p><button class="btn secondary" id="testPuter">Check Puter connection</button><div class="status" id="settingsStatus"></div><p class="hint">SDK: <a href="https://docs.puter.com/AI/" target="_blank" rel="noopener" style="color:#a99fff">Official Puter AI documentation</a></p></div>
+ </section>
+ <div class="footer">AMAI AI STUDIO • Built for web, tablet and mobile • Powered by Puter.js</div>
+</main></div>
+<script src="https://js.puter.com/v2/"></script>
+<script>
+const $=id=>document.getElementById(id);
+const titles={home:'Your AI command center',chat:'AI Chat',image:'Image Studio',writer:'AI Writer',code:'Code Assistant',vision:'Image Analyzer',prompts:'Prompt Library',history:'Local History',settings:'Settings'};
+let active='home', history=JSON.parse(localStorage.getItem('amai_history')||'[]'), messages=[];
+function saveHistory(type,input,output){history.unshift({type,input,output,time:new Date().toLocaleString()});history=history.slice(0,60);localStorage.setItem('amai_history',JSON.stringify(history));renderHistory()}
+function renderHistory(){const el=$('historyList');if(!history.length){el.textContent='No saved activity yet.';return}el.innerHTML=history.map((h,i)=>`<div style="padding:12px 0;border-bottom:1px solid #26334a"><b>${escapeHtml(h.type)}</b><div style="color:#91a0b9;font-size:12px">${escapeHtml(h.time)}</div><div style="margin-top:5px">${escapeHtml((h.input||'').slice(0,130))}</div></div>`).join('')}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function navigate(view){active=view;Object.keys(titles).forEach(v=>$('view-'+v).classList.toggle('hidden',v!==view));$('pageTitle').textContent=titles[view]||'AMAI';document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));$('sidebar').classList.remove('open');if(view==='history')renderHistory()}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.view)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.go)));
+$('menuBtn').addEventListener('click',()=>$('sidebar').classList.toggle('open'));
+$('newChatTop').addEventListener('click',()=>{messages=[];$('chatLog').innerHTML='<div class="bubble ai">New conversation started. How can I help?</div>';navigate('chat')});
+function setStatus(id,msg){$(id).textContent=msg}
+function requirePuter(){if(!window.puter||!puter.ai)throw new Error('Puter.js did not load. Check your internet connection and refresh the page.')}
+function normalizeResponse(r){let c=r?.message?.content??r?.text??r; if(Array.isArray(c))return c.map(x=>x.text||'').join('\n');return typeof c==='string'?c:JSON.stringify(c,null,2)}
+async function askAI(prompt,model){requirePuter();const r=await puter.ai.chat(prompt,{model:model||'gpt-5.4-nano'});return normalizeResponse(r)}
+function addBubble(text,who){const d=document.createElement('div');d.className='bubble '+who;d.textContent=text;$('chatLog').appendChild(d);$('chatLog').scrollTop=$('chatLog').scrollHeight;return d}
+async function sendChat(){const prompt=$('chatInput').value.trim();if(!prompt)return;const model=$('chatModel').value;addBubble(prompt,'user');$('chatInput').value='';$('sendChat').disabled=true;setStatus('chatStatus','Connecting to Puter and generating...');try{requirePuter();messages.push({role:'user',content:prompt});const r=await puter.ai.chat(messages,{model});const answer=normalizeResponse(r);messages.push({role:'assistant',content:answer});addBubble(answer,'ai');saveHistory('AI Chat',prompt,answer);setStatus('chatStatus','Response complete.')}catch(e){setStatus('chatStatus','Error: '+(e.message||e));addBubble('Sorry, the request failed: '+(e.message||e),'ai')}finally{$('sendChat').disabled=false}}
+$('sendChat').addEventListener('click',sendChat);$('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat()}});
+$('clearChat').addEventListener('click',()=>{messages=[];$('chatLog').innerHTML='';setStatus('chatStatus','Conversation cleared.')});
+$('makeImage').addEventListener('click',async()=>{const p=$('imagePrompt').value.trim();if(!p)return setStatus('imageStatus','Please enter an image description.');$('makeImage').disabled=true;setStatus('imageStatus','Generating image. This may take a little while...');$('imageOutput').innerHTML='';try{requirePuter();const model=$('imageModel').value;const opts=model?{model}:{};const img=await puter.ai.txt2img(p,opts);img.className='image-result';img.alt='AI generated image';$('imageOutput').appendChild(img);const link=document.createElement('a');link.href=img.src;link.download='amai-generated-image.png';link.textContent='Open generated image';link.style='display:block;color:#aaa0ff;margin-top:10px';link.target='_blank';$('imageOutput').appendChild(link);setStatus('imageStatus','Image generated. Save it from the image or open link.');saveHistory('Image Studio',p,'Image generated.')}catch(e){setStatus('imageStatus','Error: '+(e.message||e))}finally{$('makeImage').disabled=false}});
+async function runTextTool(inputId,outId,statusId,buttonId,makePrompt,type,copyId){const input=$(inputId).value.trim();if(!input)return setStatus(statusId,'Please enter a request first.');$(buttonId).disabled=true;setStatus(statusId,'Generating...');$(outId).textContent='';try{const answer=await askAI(makePrompt(input),$('chatModel')?.value||'gpt-5.4-nano');$(outId).textContent=answer;$(copyId).classList.remove('hidden');saveHistory(type,input,answer);setStatus(statusId,'Complete.')}catch(e){setStatus(statusId,'Error: '+(e.message||e))}finally{$(buttonId).disabled=false}}
+$('writeBtn').addEventListener('click',()=>runTextTool('writerPrompt','writerOutput','writerStatus','writeBtn',p=>`Write a ${$('writerType').value} in a ${$('writerTone').value} tone. Follow the user's brief carefully:\n\n${p}`,'AI Writer','copyWriter'));
+$('codeBtn').addEventListener('click',()=>runTextTool('codePrompt','codeOutput','codeStatus','codeBtn',p=>`${$('codeTask').value}. Give accurate, runnable code and explain assumptions. User request:\n\n${p}`,'Code Assistant','copyCode'));
+async function copyFrom(id){try{await navigator.clipboard.writeText($(id).textContent);alert('Copied.')}catch(e){alert('Copy is not available in this browser. Select the text and copy it manually.')}}
+$('copyWriter').addEventListener('click',()=>copyFrom('writerOutput'));$('copyCode').addEventListener('click',()=>copyFrom('codeOutput'));
+$('visionBtn').addEventListener('click',async()=>{const f=$('visionFile').files[0];if(!f)return setStatus('visionStatus','Choose an image first.');const prompt=$('visionPrompt').value.trim()||'Describe this image in detail.';$('visionBtn').disabled=true;setStatus('visionStatus','Analyzing image...');try{requirePuter();const r=await puter.ai.chat(prompt,f,false,{model:$('chatModel').value});const answer=normalizeResponse(r);$('visionOutput').textContent=answer;saveHistory('Image Analyzer',prompt,answer);setStatus('visionStatus','Analysis complete.')}catch(e){setStatus('visionStatus','Error: '+(e.message||e))}finally{$('visionBtn').disabled=false}});
+const prompts=[['Cinematic product ad','Create a premium cinematic product advertisement for [PRODUCT], with dramatic studio lighting, detailed materials and a luxury commercial photography style.'],['Tamil devotional poster','Create a respectful Tamil devotional poster concept for [DEITY/FESTIVAL], with elegant Tamil typography, traditional temple details and a rich cinematic golden atmosphere.'],['YouTube Shorts script','Write a 45-second YouTube Shorts script about [TOPIC], with a powerful hook, concise explanation and memorable ending.'],['Website landing page','Create a responsive modern landing page for [BUSINESS], including hero, benefits, features, testimonials, FAQ and clear calls to action.'],['Instagram content calendar','Create a 7-day Instagram content calendar for [NICHE], with daily post ideas, captions and relevant hashtags.'],['Explain a complex topic','Explain [TOPIC] in simple language, using an analogy, step-by-step explanation and practical example.']];
+$('promptCards').innerHTML=prompts.map((p,i)=>`<article class="card"><h3>${escapeHtml(p[0])}</h3><p style="margin:8px 0 13px">${escapeHtml(p[1])}</p><button class="btn secondary" data-prompt="${i}">Use prompt</button></article>`).join('');
+$('promptCards').addEventListener('click',e=>{const b=e.target.closest('[data-prompt]');if(!b)return;$('writerPrompt').value=prompts[+b.dataset.prompt][1];navigate('writer')});
+$('clearHistory').addEventListener('click',()=>{if(confirm('Delete local activity history?')){history=[];localStorage.removeItem('amai_history');renderHistory()}});
+$('testPuter').addEventListener('click',async()=>{setStatus('settingsStatus','Checking...');try{requirePuter();const models=await puter.ai.listModels();setStatus('settingsStatus','Puter.js connected. Model list loaded ('+(Array.isArray(models)?models.length:'available')+').')}catch(e){setStatus('settingsStatus','Could not verify: '+(e.message||e))}});
+renderHistory();
+</script>
+</body>
+</html>
